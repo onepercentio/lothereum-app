@@ -1,0 +1,15 @@
+.TicketBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.TicketBox p {
+    text-align: center;
+    margin: 5px;
+}
+
+.TicketBox h2 {
+    color: #00C853;
+}

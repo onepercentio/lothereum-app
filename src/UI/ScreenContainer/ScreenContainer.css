@@ -1,0 +1,4 @@
+.ScreenContainer {
+  display: flex;
+  flex-direction: column;
+}
