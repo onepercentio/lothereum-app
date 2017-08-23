@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { TicketBox, ScreenContainer, BlockContainer, Logo, DrawingInfo } from '../UI'
+import { Ticket, ScreenContainer, BlockContainer, Logo, DrawingInfo } from '../UI'
 
 class CurrentDrawing extends Component {
-  
+
   render() {
     return (
       <ScreenContainer>
@@ -11,7 +11,8 @@ class CurrentDrawing extends Component {
           <DrawingInfo id={743876} prize={30943123}/>
         </BlockContainer>
         <BlockContainer>
-          <TicketBox />
+          {/*<TicketBox />*/}
+          <Ticket ticketId={123456} numbers={[10,20,30,40,50,60]} />
         </BlockContainer>
       </ScreenContainer>
     )

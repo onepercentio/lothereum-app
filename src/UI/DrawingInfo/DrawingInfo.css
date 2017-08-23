@@ -1,3 +1,7 @@
 .DrawingInfo {
     text-align: center;
 }
+
+.DrawingInfo p {
+    margin: 5px;
+}
