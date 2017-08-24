@@ -1,0 +1,28 @@
+.Navigation {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #43A047;
+    padding: 8px;
+}
+.Navigation button {
+    background-color: transparent;
+    color: #E8F5E9;
+    flex: 1;
+    font-size: 0.9em;
+    border: 0;
+    border-right: 0.5px solid white;
+    outline: none;
+}
+
+.Navigation button:last-child {
+    border-right: 0;
+}
+
+.Navigation .active {
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+}

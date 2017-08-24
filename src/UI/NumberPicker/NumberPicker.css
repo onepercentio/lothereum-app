@@ -1,0 +1,40 @@
+.NumberPicker {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 16px;
+    border: 0.6px solid black;
+}
+
+.NumbersLine {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px;
+    margin: -9px;
+}
+
+.NumberItem {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border-radius: 100%;
+    border: none;
+    margin: 0px 4px;
+    outline: none;
+}
+
+.ItemSelected {
+    background-color: #43A047;
+    color: white;
+}
+
+.NumberItem h3 {
+    flex: 1;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+}
