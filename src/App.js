@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ScreenContainer, ContentContainer, Navigation } from './UI'
-import CurrentDrawing from './CurrentDrawing'
-import BuyTicket from './BuyTicket'
+import CurrentDrawing from './Screens/CurrentDrawing'
+import BuyTicket from './Screens/BuyTicket'
 
 // import Web3 from 'web3'
 // const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))

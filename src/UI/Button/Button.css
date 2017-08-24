@@ -1,0 +1,19 @@
+.Button {
+    display: flex;
+    flex: 1;
+    border: none;
+    font-size: 18px;
+    border-radius: 6px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 5px;
+    color: white;
+    background-color: #4CAF50;
+}
+
+.disabled {
+    color: #9E9E9E;
+    background-color: #A5D6A7;
+}
+
