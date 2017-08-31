@@ -1,17 +1,14 @@
 import React from 'react'
 import './Navigation.css'
 
-export default ({changeRoute, activeRoute}) => (
+export default ({changeRoute, activeRoute, routes = []}) => (
     <div className="Navigation">
-        <button
-            className={activeRoute === 'home' ? "active" : ""}
-            onClick={_ => changeRoute('home')}>
-            Home
-        </button>
-        <button 
-            className={activeRoute === 'buy' ? "active" : ""}
-            onClick={_ => changeRoute('buy')}>
-            Buy Ticket
-        </button>
+        { routes.map(r => (
+            <button 
+                key={r.name}
+                className={activeRoute === r.name ? "active" : ""}
+                onClick={_ => changeRoute(r.name)}>
+                { r.title }
+            </button>))}
     </div>
 )

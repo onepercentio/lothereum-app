@@ -24,6 +24,7 @@ class NumberPicker extends Component {
               <div className="NumbersLine">
                   { line.map(n => (
                       <button
+                        key={n}
                         onClick={_ => onToggle(n)}
                         className={`NumberItem ${selectedNumbers.indexOf(n) !== -1 ? 'ItemSelected' : ''}`}>
                         <h3>{n}</h3>

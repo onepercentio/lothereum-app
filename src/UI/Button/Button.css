@@ -4,16 +4,19 @@
     border: none;
     font-size: 18px;
     border-radius: 6px;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 5px 5px;
+    text-align: center;
+    padding: 8px 8px;
     color: white;
     background-color: #4CAF50;
+    cursor: pointer;
 }
 
 .disabled {
     color: #9E9E9E;
     background-color: #A5D6A7;
+    cursor: not-allowed;
 }
 
