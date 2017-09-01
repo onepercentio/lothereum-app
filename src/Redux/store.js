@@ -8,7 +8,7 @@ import tickets from './tickets'
 import newTicket from './newTicket'
 
 // sagas
-import sagras from './sagas'
+import sagas from './sagas'
 
 const reducers = combineReducers({
     account,
@@ -17,9 +17,7 @@ const reducers = combineReducers({
     newTicket
 })
 
-const store = createStore(reducers, applyMiddleware(sagaMiddleware))
 
-// then run the saga
-sagaMiddleware.run(sagras)
+const store = createStore(reducers, applyMiddleware(sagas.run()))
 
 export default store

@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { fetchBalance } from '../Redux/account'
 import { ScreenContainer, BlockContainer, Logo, AccountBox, Button } from '../UI'
 
 const mapStateToProps = ({ account }) => ({
   address: account.address,
   balance: account.balance
+})
+
+const mapDispatchToProps = dispatch => ({
+  fetchBalance: dispatch(fetchBalance())
 })
 
 class MyAccount extends Component {
@@ -19,6 +24,10 @@ class MyAccount extends Component {
   handleCreate = () => alert('create account')
   handleLogin = () => alert('login bro')
   handleRemove = () => alert('remove account')
+
+  componentDidMount() {
+    this.props.fetchBalance()
+  }
 
   render() {
     let { address, balance } = this.props
@@ -49,4 +58,4 @@ class MyAccount extends Component {
   }
 }
 
-export default connect(mapStateToProps)(MyAccount)
+export default connect(mapStateToProps, mapDispatchToProps)(MyAccount)

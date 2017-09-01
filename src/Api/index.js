@@ -1,7 +1,7 @@
 import Web3 from 'web3'
-import apiCalls from './apiCalls'
+import apiCalls from './calls'
 
-const DEFAULT_TIMEOUT = 20000
+const END_POINT = "http://127.0.0.1:8545"
 
 // our "constructor"
 const create = () => {
