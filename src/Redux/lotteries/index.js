@@ -1,5 +1,5 @@
 const initialState = {
-    list: [{ id: 597364, prize: 48927349, date: 1504364400 }],
+    list: [{ id: 597364, prize: 48927349, date: 1504364400, maxNumber: 15, numbersInTicket: 3 }],
     fetching: false,
     error: null
 }

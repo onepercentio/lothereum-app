@@ -8,16 +8,26 @@ import {
   NumberPicker,
   Ticket
 } from '../UI'
+import { connect } from 'react-redux'
+import { setNumbers } from '../Redux/newTicket'
+import { getNextLottery } from '../Redux/lotteries'
+
+const mapStateToProps = ({ newTicket, lotteries }) => ({ 
+  numbers: newTicket.numbers,
+  lottery: getNextLottery(lotteries, { id: newTicket.id })
+})
+
+const mapDispatchToProps = dispatch => ({
+  setNumbers: numbers => dispatch(setNumbers(numbers))
+})
 
 class BuyTicket extends Component {
   constructor(props){
     super(props)
     this.state = {
-      selectedNumbers: [],
-      maxNumber: 60,
-      numbersInTicket: 6,
       showPurchaseConfirmation: false
     }
+
     this.handleToggleNumber = this.handleToggleNumber.bind(this)
     this.handleNext = this.handleNext.bind(this)
     this.handlePressRandom = this.handlePressRandom.bind(this)
@@ -26,50 +36,44 @@ class BuyTicket extends Component {
   }
 
   handleToggleNumber = n => {
-    let { selectedNumbers, numbersInTicket } = this.state
-    if(selectedNumbers.find(k => k === n)){
-      this.setState({ selectedNumbers: selectedNumbers.filter(k => k !== n)})
-    } else if(selectedNumbers.length < numbersInTicket){
-      this.setState({ selectedNumbers: selectedNumbers.concat([n])})
+    let { numbers, lottery: { numbersInTicket }, setNumbers } = this.props
+    if(numbers.find(k => k === n)){
+      setNumbers({ numbers: numbers.filter(k => k !== n)})
+    } else if(numbers.length < numbersInTicket){
+      setNumbers({ numbers: numbers.concat([n])})
     }
-  }
-
-  handleNext = _ => {
-    this.setState({
-      selectedNumbers: this.state.selectedNumbers.sort((a,b) => a-b),
-      showPurchaseConfirmation: true
-    })
   }
 
   handlePressRandom = _ => {
-    let { maxNumber, numbersInTicket } = this.state
-    let randomizedNumbers = [], n
-    while(randomizedNumbers.length < numbersInTicket){
+    let { lottery: { maxNumber, numbersInTicket }, setNumbers } = this.props
+    let numbers = [], n
+    while(numbers.length < numbersInTicket){
       n = Math.floor(Math.random() * maxNumber) + 1
-      if(randomizedNumbers.indexOf(n) === -1) randomizedNumbers.push(n)
+      if(numbers.indexOf(n) === -1) numbers.push(n)
     }
-    this.setState({ selectedNumbers: randomizedNumbers })
+    setNumbers({ numbers })
   }
 
+  handleNext = _ => this.setState({ showPurchaseConfirmation: true })
   handleCancel = _ => this.setState({ showPurchaseConfirmation: false })
-
   handleConfirmPurchase = _ => { 
     alert("Ticket purchased: #123456")
-    this.setState({ showPurchaseConfirmation: false, selectedNumbers: [] })
+    this.setState({ showPurchaseConfirmation: false })
   }
 
   render() {
-    let { selectedNumbers, maxNumber, numbersInTicket, showPurchaseConfirmation } = this.state
+    let { showPurchaseConfirmation } = this.state
+    let { numbers, lottery: { id, prize, maxNumber, numbersInTicket }} = this.props
     return (
       <ScreenContainer>
         <BlockContainer>
             <Logo />
-            <DrawingInfo id={743876} prize={30943123}/>
+            <DrawingInfo id={id} prize={prize}/>
         </BlockContainer>
         { showPurchaseConfirmation ? (
           <ScreenContainer>
             <BlockContainer>
-              <Ticket numbers={selectedNumbers}/>
+              <Ticket numbers={numbers}/>
             </BlockContainer>
             <BlockContainer>
               <Button 
@@ -85,7 +89,7 @@ class BuyTicket extends Component {
             <BlockContainer>
                 <NumberPicker
                   maxNumber={maxNumber}
-                  selectedNumbers={selectedNumbers}
+                  selectedNumbers={numbers}
                   numbersInTicket={numbersInTicket}
                   onToggle={this.handleToggleNumber}/>
             </BlockContainer>
@@ -95,7 +99,7 @@ class BuyTicket extends Component {
             </BlockContainer>
             <BlockContainer>
               <Button 
-                disabled={ selectedNumbers.length < numbersInTicket } 
+                disabled={ numbers.length < numbersInTicket } 
                 onClick={ this.handleNext }>Next</Button>
             </BlockContainer>
           </ScreenContainer>
@@ -105,4 +109,4 @@ class BuyTicket extends Component {
   }
 }
 
-export default BuyTicket
+export default connect(mapStateToProps,mapDispatchToProps)(BuyTicket)
