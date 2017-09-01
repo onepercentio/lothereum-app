@@ -1,22 +1,44 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { getNextLottery } from '../Redux/lotteries'
+import { getTicketsForLottery } from '../Redux/tickets'
 import { Ticket, TicketBox, ScreenContainer, BlockContainer, Logo, DrawingInfo } from '../UI'
 
-class CurrentDrawing extends Component {
+const mapStateToProps = ({ lotteries, tickets }) => {
+  let currentDrawing = getNextLottery(lotteries)
+  return { currentDrawing, tickets: getTicketsForLottery(tickets, { lotteryId: currentDrawing.id })}
+}
+const mapDispatchToProps = dispatch => ({
 
+})
+
+class CurrentDrawing extends Component {
   render() {
+    let { 
+      currentDrawing: { id: lotteryId, prize, date },
+      tickets  
+    } = this.props
+
     return (
       <ScreenContainer>
         <BlockContainer>
           <Logo />
-          <DrawingInfo id={743876} prize={30943123}/>
+          <DrawingInfo id={lotteryId} prize={prize} date={date}/>
         </BlockContainer>
         <BlockContainer>
-          <TicketBox />
-          {/*<Ticket ticketId={123456} numbers={[10,20,30,40,50,60]} />*/}
+        { tickets.length < 1 ? 
+          <TicketBox /> :
+          tickets.map(ticket => 
+            <Ticket
+              key={ticket.id}
+              ticketId={ticket.id}
+              numbers={ticket.numbers} />
+          )
+        }
         </BlockContainer>
       </ScreenContainer>
     )
   }
 }
 
-export default CurrentDrawing
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentDrawing)

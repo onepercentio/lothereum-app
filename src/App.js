@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import { Provider } from 'react-redux'
+import store from './Redux/store'
+
 import { ScreenContainer, ContentContainer, Navigation } from './UI'
-import CurrentDrawing from './Screens/CurrentDrawing'
-import BuyTicket from './Screens/BuyTicket'
-import MyAccount from './Screens/MyAccount'
+import { CurrentDrawing, BuyTicket, MyAccount } from './Screens'
+
 
 const routes = [{ name: 'home', title: 'Home' }, { name: 'buy', title: 'Buy Ticket' }, { name: 'account', title: 'My Account' }]
 
@@ -26,17 +28,19 @@ class App extends Component {
   render() {
     let { route, options } = this.state
     return (
-      <ScreenContainer>
-        <Navigation
-          activeRoute={ route } 
-          changeRoute={ this.changeRoute }
-          routes={ routes }/>
-        <ContentContainer>
-          { route === 'home' ? <CurrentDrawing /> :
-            route === 'buy' ? <BuyTicket options={options}/> :
-            route === 'account' ? <MyAccount /> : null } 
-        </ContentContainer>
-      </ScreenContainer>
+      <Provider store={store}>
+        <ScreenContainer>
+          <Navigation
+            activeRoute={ route } 
+            changeRoute={ this.changeRoute }
+            routes={ routes }/>
+          <ContentContainer>
+            { route === 'home' ? <CurrentDrawing /> :
+              route === 'buy' ? <BuyTicket options={options}/> :
+              route === 'account' ? <MyAccount /> : null } 
+          </ContentContainer>
+        </ScreenContainer>
+      </Provider>
     )
   }
 }

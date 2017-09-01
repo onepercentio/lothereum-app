@@ -20,8 +20,8 @@ class NumberPicker extends Component {
 
     return (
       <div className="NumberPicker">
-          { numbers.map(line => (
-              <div className="NumbersLine">
+          { numbers.map((line, i) => (
+              <div key={i} className="NumbersLine">
                   { line.map(n => (
                       <button
                         key={n}
