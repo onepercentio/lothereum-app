@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "apisauce": "^0.14.1",
     "eth-lightwallet": "^2.5.6",
     "moment": "^2.18.1",
     "react": "^15.6.1",
@@ -10,6 +11,7 @@
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.11",
     "redux": "^3.7.2",
+    "redux-saga": "^0.15.6",
     "underscore": "^1.8.3",
     "web3": "^1.0.0-beta.18"
   },
