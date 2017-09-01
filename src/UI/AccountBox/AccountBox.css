@@ -1,0 +1,31 @@
+.AccountContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 16px;
+    border: 0.6px solid black;
+}
+.AccountInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    padding: 4px 4px;
+}
+.AccountInfo b {
+    color: black;
+}
+.AccountContainer button {
+    border: none;
+    font-size: 14px;
+    border-radius: 6px;
+    align-self: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 8px 12px;
+    color: white;
+    background-color: red;
+    cursor: pointer;
+}

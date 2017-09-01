@@ -1,5 +1,5 @@
 const initialState = {
-    address: 0,
+    address: null,
     privateKey: '',
     balance: 0,
     fetching: false,
