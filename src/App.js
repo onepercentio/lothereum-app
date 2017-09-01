@@ -21,7 +21,7 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      route: 'buy',
+      route: 'account',
       options: null
     }
     this.changeRoute = this.changeRoute.bind(this)
