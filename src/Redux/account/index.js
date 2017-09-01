@@ -1,5 +1,5 @@
 const initialState = {
-    address: '0x1802Dd945a19E6cA15a3C7B55A3CB566615faF7',
+    address: null,
     privateKey: '',
     balance: 0,
     fetching: false,
