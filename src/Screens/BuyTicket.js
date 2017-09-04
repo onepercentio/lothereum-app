@@ -9,7 +9,7 @@ import {
   Ticket
 } from '../UI'
 import { connect } from 'react-redux'
-import { setNumbers } from '../Redux/newTicket'
+import { setNumbers, buyTicket } from '../Redux/newTicket'
 import { getNextLottery } from '../Redux/lotteries'
 
 const mapStateToProps = ({ newTicket, lotteries }) => ({ 
@@ -18,7 +18,8 @@ const mapStateToProps = ({ newTicket, lotteries }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setNumbers: numbers => dispatch(setNumbers(numbers))
+  setNumbers: numbers => dispatch(setNumbers(numbers)),
+  buyTicket: _ => dispatch(buyTicket())
 })
 
 class BuyTicket extends Component {
@@ -56,10 +57,9 @@ class BuyTicket extends Component {
 
   handleNext = _ => this.setState({ showPurchaseConfirmation: true })
   handleCancel = _ => this.setState({ showPurchaseConfirmation: false })
-  handleConfirmPurchase = _ => { 
-    alert("Ticket purchased: #123456")
-    this.setState({ showPurchaseConfirmation: false })
-  }
+  handleConfirmPurchase = _ => this.props.buyTicket()
+  
+  componentDidMount = _ => this.props.setNumbers({ numbers: []})
 
   render() {
     let { showPurchaseConfirmation } = this.state

@@ -1,13 +1,19 @@
 import React from 'react'
 import './TicketBox.css'
+import { Ticket } from '../../UI'
 
-export default ({ tickets = [] }) => (
+export default ({ tickets = [], onBuyOne }) => (
     <div className="TicketBox">
         { tickets.length === 0 ? (
             <div>
                 <p>You have no tickets for this drawing.</p>
-                <h2>Buy one now!</h2>
+                <a className="BuyOne" onClick={onBuyOne}><h2>Buy one now!</h2></a>
             </div>
-        ) : null}
+        ) : tickets.map(ticket => 
+            <Ticket
+              key={ticket.id}
+              ticketId={ticket.id}
+              numbers={ticket.numbers} />
+        )}
     </div>
 )

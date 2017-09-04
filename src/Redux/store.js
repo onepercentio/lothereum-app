@@ -8,6 +8,7 @@ import account from './account'
 import lotteries from './lotteries'
 import tickets from './tickets'
 import newTicket from './newTicket'
+import router from './router'
 
 // sagas
 import sagas from './sagas'
@@ -18,7 +19,8 @@ const reducers = combineReducers({
     account,
     lotteries,
     tickets,
-    newTicket
+    newTicket,
+    router
 })
 
 

@@ -7,7 +7,7 @@ export default ({changeRoute, activeRoute, routes = []}) => (
             <button 
                 key={r.name}
                 className={activeRoute === r.name ? "active" : ""}
-                onClick={_ => changeRoute(r.name)}>
+                onClick={_ => changeRoute({ route: r.name })}>
                 { r.title }
             </button>))}
     </div>

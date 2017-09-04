@@ -4,7 +4,10 @@ export default (api) => ({
     getLotteries: _ =>
         new Promise(resolve => setTimeout(_ => resolve([{ id: 597364, prize: 48927349, date: 1504364400, maxNumber: 15, numbersInTicket: 3 }]), 1000)),
     getTickets: ({ address }) =>
-        new Promise(resolve => setTimeout(_ => resolve([{ id: 13, lotteryId: 597364, numbers: [10, 20, 30, 40, 50, 60]}]),1500))
+        // new Promise(resolve => setTimeout(_ => resolve([{ id: 13, lotteryId: 597364, numbers: [10, 20, 30, 40, 50, 60]}]),1500)),
+        new Promise(resolve => setTimeout(_ => resolve([]),1500)),
+    buyTicket: ({ address, numbers, lotteryId }) =>
+        new Promise(resolve => setTimeout(_ => resolve({ id: 754673 }), 1100))
     // /*
     //     POST: /users/card
     //     registers a card for a new user

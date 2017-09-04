@@ -13,3 +13,7 @@
 .TicketBox h2 {
     color: #00C853;
 }
+
+.BuyOne {
+    cursor: pointer;
+}

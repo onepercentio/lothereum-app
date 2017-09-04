@@ -7,6 +7,7 @@ import { fetchBalance } from './account'
 import accountSagas from './account/sagas'
 import lotteriesSagas from './lotteries/sagas'
 import ticketSagas from './tickets/sagas'
+import newTicketSagas from './newTicket/sagas'
 
 function* afterRehydrate() {
   yield put(fetchLotteries())
@@ -20,6 +21,7 @@ function* sagas() {
     ...accountSagas,
     ...lotteriesSagas,
     ...ticketSagas,
+    ...newTicketSagas,
     takeLatest('persist/REHYDRATE', afterRehydrate)
   ])
 }
