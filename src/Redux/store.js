@@ -9,6 +9,8 @@ import newTicket from './newTicket'
 
 // sagas
 import sagas from './sagas'
+// create the saga middleware
+const sagaMiddleware = createSagaMiddleware()
 
 const sagaMiddleware = createSagaMiddleware()
 
