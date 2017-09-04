@@ -7,7 +7,7 @@ import { TicketBox, ScreenContainer, BlockContainer, Logo, DrawingInfo } from '.
 
 const mapStateToProps = ({ lotteries, tickets }) => {
   let currentDrawing = getNextLottery(lotteries)
-  return { currentDrawing, tickets: getTicketsForLottery(tickets, { lotteryId: currentDrawing.id })}
+  return { currentDrawing, tickets: getTicketsForLottery(tickets, { lotteryId: currentDrawing.drawingIndex })}
 }
 const mapDispatchToProps = dispatch => ({
   fetchLotteries: () => dispatch(fetchLotteries()),
@@ -24,19 +24,19 @@ class CurrentDrawing extends Component {
   handleBuyTicket = () => this.props.buyTicket()
 
   render() {
-    let { 
-      currentDrawing: { id: lotteryId, prize, date },
-      tickets  
+    let {
+      currentDrawing: { drawingIndex, prize, nextDrawingDate },
+      tickets
     } = this.props
 
     return (
       <ScreenContainer>
         <BlockContainer>
           <Logo />
-          <DrawingInfo id={lotteryId} prize={prize} date={date}/>
+          <DrawingInfo id={drawingIndex} prize={prize} date={nextDrawingDate}/>
         </BlockContainer>
         <BlockContainer>
-          <TicketBox 
+          <TicketBox
             tickets={ tickets }
             onBuyOne={ this.handleBuyTicket }
             />

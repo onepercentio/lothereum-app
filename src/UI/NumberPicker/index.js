@@ -3,13 +3,13 @@ import './NumberPicker.css'
 
 class NumberPicker extends Component {
   render() {
-    let { maxNumber, onToggle, selectedNumbers } = this.props
+    let { maxDrawableNumber, onToggle, selectedNumbers } = this.props
 
-    let noColumns = maxNumber % 6 === 0 ? 6 :
-        maxNumber % 5 === 0 ? 5 :
-        maxNumber % 4 === 0 ? 4 : 6
+    let noColumns = maxDrawableNumber % 6 === 0 ? 6 :
+        maxDrawableNumber % 5 === 0 ? 5 :
+        maxDrawableNumber % 4 === 0 ? 4 : 6
 
-    let numbers = Array.apply(null, { length: maxNumber })
+    let numbers = Array.apply(null, { length: maxDrawableNumber })
         .reduce((c, n, i) => {
             if(i % noColumns === 0){
                 c.push([])

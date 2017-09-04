@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
-import { 
+import {
   FETCH_LOTTERIES,
   fetchResult, fetchError
 } from '../lotteries'
@@ -10,10 +10,11 @@ function* fetchLotteriesSaga(action) {
     const lotteries = yield call(Api.getLotteries)
     yield put(fetchResult({ list: lotteries }))
   } catch (e) {
+    console.log('ee ' + e)
     yield put(fetchError({ error: e.message }))
   }
 }
 
-export default [ 
+export default [
   takeLatest(FETCH_LOTTERIES, fetchLotteriesSaga)
 ]

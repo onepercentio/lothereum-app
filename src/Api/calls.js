@@ -1,8 +1,43 @@
+import contracts from './contracts'
+
+async function runAllPromises (promises){
+    let result = []
+    for( let promise of promises ){
+        result.push(await promise())
+    }
+    return result
+}
+
+
 export default (api) => ({
     getBalance: ({ address }) =>
-        new Promise(resolve => setTimeout(_ => resolve(Math.floor(Math.random()*500)), 1000)),
-    getLotteries: _ =>
-        new Promise(resolve => setTimeout(_ => resolve([{ id: 597364, prize: 48927349, date: 1504364400, maxNumber: 15, numbersInTicket: 3 }]), 1000)),
+        api.eth.getBalance(address),
+    getLotteries: _ =>{
+        let contractInterfaces = contracts.map(({abi, address }) => new api.eth.Contract(abi, address))
+        return Promise.all(contractInterfaces.map((c, i) =>
+            runAllPromises([
+                c.methods.name().call,
+                c.methods.ticketPrice().call,
+                c.methods.drawingIndex().call,
+                c.methods.maxDrawableNumber().call,
+                c.methods.numbersPerTicket().call,
+                c.methods.nextDrawingDate().call
+            ]).then(lotto => {
+                let [name, ticketPrice, drawingIndex, maxDrawableNumber, numbersPerTicket, nextDrawingDate] = lotto
+                return { name, ticketPrice, drawingIndex, maxDrawableNumber, numbersPerTicket, nextDrawingDate, id: contracts[i].address }
+            }).then(lotto => c.methods.draws(lotto.drawingIndex).call().then(({ total }) => ({...lotto, prize: total})))
+        ))
+        .then(i => {
+            console.log(' aaa ', JSON.stringify(i, null, 2))
+            return i
+        })
+        // return Promise.resolve([])
+    }
+        // api.eth.get
+        // new Promise(
+        //
+        //     resolve => setTimeout(_ => resolve([{ id: 597364, prize: 48927349, date: 1504364400, maxNumber: 15, numbersInTicket: 3 }]), 1000)
+        ,
     getTickets: ({ address }) =>
         // new Promise(resolve => setTimeout(_ => resolve([{ id: 13, lotteryId: 597364, numbers: [10, 20, 30, 40, 50, 60]}]),1500)),
         new Promise(resolve => setTimeout(_ => resolve([]),1500)),
