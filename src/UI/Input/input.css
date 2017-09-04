@@ -1,0 +1,15 @@
+.InputContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin: 4px 4px;
+}
+
+.InputContainer h4 {
+    padding: 0px;
+    margin: 8px;
+}
+
+.InputContainer input {
+    height: 18px;
+}

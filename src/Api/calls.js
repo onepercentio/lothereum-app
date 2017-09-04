@@ -1,4 +1,8 @@
 export default (api) => ({
+    getBalance: ({ address }) =>
+        new Promise(resolve => setTimeout(_ => resolve(Math.floor(Math.random()*500)), 1000))
+
+
     // /*
     //     POST: /users/card
     //     registers a card for a new user

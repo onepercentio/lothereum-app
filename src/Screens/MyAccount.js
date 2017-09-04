@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchBalance } from '../Redux/account'
-import { ScreenContainer, BlockContainer, Logo, AccountBox, Button } from '../UI'
+import { fetchBalance, setInfo, clearInfo } from '../Redux/account'
+import { ScreenContainer, BlockContainer, Logo, AccountBox, Button, Input } from '../UI'
 
 const mapStateToProps = ({ account }) => ({
   address: account.address,
@@ -9,28 +9,42 @@ const mapStateToProps = ({ account }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchBalance: () => dispatch(fetchBalance())
+  fetchBalance: _ => dispatch(fetchBalance()),
+  setInfo: info => dispatch(setInfo(info)),
+  clearInfo: _ => dispatch(clearInfo())
 })
 
 class MyAccount extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      showLoginForm: true, // change
+      formAddress: '',
+      formKey: ''
+    }
+
     this.handleCreate = this.handleCreate.bind(this)
     this.handleLogin = this.handleLogin.bind(this)
     this.handleRemove = this.handleRemove.bind(this)
+    this.handleFormChange = this.handleFormChange.bind(this)
+    this.handleFormSubmit = this.handleFormSubmit.bind(this)
   }
 
-  handleCreate = () => alert('create account')
-  handleLogin = () => alert('login bro')
-  handleRemove = () => alert('remove account')
-
-  componentDidMount() {
-    this.props.fetchBalance()
+  handleCreate = () => this.props.setInfo({ address: '0x1802Dd945a19E6cA15a3C7B55A3CB566615faF73', privateKey: '9876543210'})
+  handleLogin = () => this.setState({ showLoginForm: true })
+  handleRemove = () => this.props.clearInfo()
+  handleFormChange = (info) => this.setState(info)
+  handleFormSubmit = _ => { 
+    this.props.setInfo({ address: this.state.formAddress, privateKey: this.state.formKey })
+    this.setState({ showLoginForm: false })
   }
+
+  componentDidMount = () => this.props.address ? this.props.fetchBalance() : null
 
   render() {
     let { address, balance } = this.props
+    let { showLoginForm } = this.state
 
     return (
       <ScreenContainer>
@@ -38,7 +52,15 @@ class MyAccount extends Component {
           <Logo />
         </BlockContainer>
         <BlockContainer>
-          { address ?
+          { showLoginForm ? 
+          <BlockContainer>
+            <BlockContainer>
+              <Input label='Address' placeholder='Your address' onChange={({ target: { value: formAddress }}) => this.handleFormChange({ formAddress })}/>
+              <Input label='Private Key' placeholder='Your private key' onChange={({ target: { value: formKey }}) => this.handleFormChange({ formKey })}/>
+            </BlockContainer>
+            <Button onClick={this.handleFormSubmit}>Login</Button>
+          </BlockContainer> :
+            address ?
           <AccountBox 
             address={address} 
             balance={balance}
