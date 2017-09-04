@@ -19,7 +19,7 @@ class MyAccount extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      showLoginForm: true, // change
+      showLoginForm: false,
       formAddress: '',
       formKey: ''
     }

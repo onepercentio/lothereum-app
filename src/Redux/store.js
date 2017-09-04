@@ -1,5 +1,5 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-// import { persistStore, autoRehydrate } from 'redux-persist'
+import { compose, createStore, combineReducers, applyMiddleware } from 'redux'
+import { persistStore, autoRehydrate } from 'redux-persist'
 import 'babel-polyfill'
 import createSagaMiddleware from 'redux-saga'
 
@@ -22,8 +22,8 @@ const reducers = combineReducers({
 })
 
 
-const store = createStore(reducers,applyMiddleware(sagaMiddleware))
+const store = createStore(reducers, compose(applyMiddleware(sagaMiddleware)), autoRehydrate())
 sagaMiddleware.run(sagas)
-// persistStore(store)
+persistStore(store, { whitelist: ['account', 'lotteries', 'tickets']})
 
 export default store
