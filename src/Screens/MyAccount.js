@@ -40,8 +40,6 @@ class MyAccount extends Component {
     this.setState({ showLoginForm: false })
   }
 
-  componentDidMount = () => this.props.address ? this.props.fetchBalance() : null
-
   render() {
     let { address, balance } = this.props
     let { showLoginForm } = this.state

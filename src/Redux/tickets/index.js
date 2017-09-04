@@ -1,5 +1,5 @@
 const initialState = {
-    list: [{ id: 13, lotteryId: 597364, numbers: [10, 20, 30, 40, 50, 60]}],
+    list: [],
     fetching: false,
     error: null
 }
@@ -10,7 +10,7 @@ export const FINISHED_FETCHING_TICKETS = 'tickets/FINISHED_FETCHING_TICKETS'
 export const ERROR_FETCHING_TICKETS = 'tickets/ERROR_FETCHING_TICKETS'
 
 // Action creators
-export const fetchLotteries = () => ({
+export const fetchTickets = () => ({
     type: FETCH_TICKETS
 })
 

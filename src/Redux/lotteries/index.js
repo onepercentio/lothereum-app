@@ -1,5 +1,5 @@
 const initialState = {
-    list: [{ id: 597364, prize: 48927349, date: 1504364400, maxNumber: 15, numbersInTicket: 3 }],
+    list: [],
     fetching: false,
     error: null
 }
@@ -39,4 +39,4 @@ export default (state = initialState, action) => {
 }
 
 // selectors
-export const getNextLottery = (state) => state.list.length > 0 ? state.list[state.list.length - 1] : null
+export const getNextLottery = (state) => state.list.length > 0 ? state.list[state.list.length - 1] : {}

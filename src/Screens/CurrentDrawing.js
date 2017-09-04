@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getNextLottery } from '../Redux/lotteries'
-import { getTicketsForLottery } from '../Redux/tickets'
+import { fetchLotteries, getNextLottery } from '../Redux/lotteries'
+import { fetchTickets, getTicketsForLottery } from '../Redux/tickets'
 import { Ticket, TicketBox, ScreenContainer, BlockContainer, Logo, DrawingInfo } from '../UI'
 
 const mapStateToProps = ({ lotteries, tickets }) => {
@@ -9,10 +9,12 @@ const mapStateToProps = ({ lotteries, tickets }) => {
   return { currentDrawing, tickets: getTicketsForLottery(tickets, { lotteryId: currentDrawing.id })}
 }
 const mapDispatchToProps = dispatch => ({
-
+  fetchLotteries: () => dispatch(fetchLotteries()),
+  fetchTickets: () => dispatch(fetchTickets())
 })
 
 class CurrentDrawing extends Component {
+
   render() {
     let { 
       currentDrawing: { id: lotteryId, prize, date },
