@@ -12,8 +12,6 @@ import sagas from './sagas'
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware()
 
-const sagaMiddleware = createSagaMiddleware()
-
 const reducers = combineReducers({
     account,
     lotteries,
