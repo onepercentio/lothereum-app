@@ -2,6 +2,7 @@
   "name": "lotherum-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://onepercentio.github.io/lothereum-app/",
   "dependencies": {
     "apisauce": "^0.14.1",
     "babel-polyfill": "^6.26.0",
@@ -21,6 +22,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.0.0"
   }
 }
