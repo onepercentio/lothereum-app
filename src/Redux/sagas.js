@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects'
+import { all, call, put, select, takeLatest } from 'redux-saga/effects'
 import { FETCH_BALANCE, ERROR_FETCHING_BALANCE, FINISHED_FETCHING_BALANCE} from './account'
 import Api from '../Api'
 
@@ -13,7 +13,7 @@ function* fetchBalance(action) {
 }
 
 function* sagas() {
-  yield takeLatest(FETCH_BALANCE, fetchBalance)
+  yield all([ takeLatest(FETCH_BALANCE, fetchBalance) ])
 }
 
 export default sagas

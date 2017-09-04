@@ -9,7 +9,7 @@ const mapStateToProps = ({ account }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchBalance: dispatch(fetchBalance())
+  fetchBalance: () => dispatch(fetchBalance())
 })
 
 class MyAccount extends Component {

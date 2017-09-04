@@ -10,6 +10,8 @@ import newTicket from './newTicket'
 // sagas
 import sagas from './sagas'
 
+const sagaMiddleware = createSagaMiddleware()
+
 const reducers = combineReducers({
     account,
     lotteries,
@@ -18,6 +20,8 @@ const reducers = combineReducers({
 })
 
 
-const store = createStore(reducers, applyMiddleware(sagas.run()))
+const store = createStore(reducers, applyMiddleware(sagaMiddleware))
+
+sagaMiddleware.run(sagas)
 
 export default store
