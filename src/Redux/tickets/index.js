@@ -24,6 +24,8 @@ export const fetchError = ({ error }) => ({
     error
 })
 
+export const setTickets = fetchResult
+
 // reducer
 export default (state = initialState, action) => {
     switch(action.type) {

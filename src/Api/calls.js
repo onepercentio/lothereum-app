@@ -21,28 +21,33 @@ export default (api) => ({
                 c.methods.drawingIndex().call,
                 c.methods.maxDrawableNumber().call,
                 c.methods.numbersPerTicket().call,
-                c.methods.nextDrawingDate().call
+                c.methods.nextDrawingDate().call,
             ]).then(lotto => {
                 let [name, ticketPrice, drawingIndex, maxDrawableNumber, numbersPerTicket, nextDrawingDate] = lotto
                 return { name, ticketPrice, drawingIndex, maxDrawableNumber, numbersPerTicket, nextDrawingDate, id: contracts[i].address }
             }).then(lotto => c.methods.draws(lotto.drawingIndex).call().then(({ total }) => ({...lotto, prize: total})))
         ))
-        .then(i => {
-            console.log(' aaa ', JSON.stringify(i, null, 2))
-            return i
-        })
-        // return Promise.resolve([])
-    }
-        // api.eth.get
-        // new Promise(
-        //
-        //     resolve => setTimeout(_ => resolve([{ id: 597364, prize: 48927349, date: 1504364400, maxNumber: 15, numbersInTicket: 3 }]), 1000)
-        ,
+    },
     getTickets: ({ address }) =>
         // new Promise(resolve => setTimeout(_ => resolve([{ id: 13, lotteryId: 597364, numbers: [10, 20, 30, 40, 50, 60]}]),1500)),
         new Promise(resolve => setTimeout(_ => resolve([]),1500)),
-    buyTicket: ({ address, numbers, lotteryId }) =>
-        new Promise(resolve => setTimeout(_ => resolve({ id: 754673 }), 1100))
+    buyTicket: ({ address, numbers, ticketPrice, contractAddress }) => {
+        // current will be passed someday when there is more than 1 contract
+        let contract = contracts.find(c => c.address === contractAddress)
+        let contractInterface = new api.eth.Contract(contract.abi, contract.address)
+
+        contractInterface.getPastEvents('NewTicket', { fromBlock: 1 }).then(r => console.log(r))
+        return contractInterface.methods.buyTicket(numbers).send({from: address, value: ticketPrice, gas: 4000000})
+            .on('transactionHash', hash => console.log('hash crap', hash))
+            .on('confirmation', (counter, receipt) => console.log('confirmation # ', counter, ' receipt = ', JSON.stringfy(receipt)))
+            .on('receipt', receipt => console.log(receipt))
+            .then(r => {console.log('===', r); return r})
+        .then(r => console.log('===', r))
+        // return contractInterface.methods.buyTicket(numbers).estimateGas()
+        // return contractInterface.methods.buyTicket(numbers).send({from: address, value: ticketPrice})
+
+    },
+    login: ({ address, password }) => api.eth.personal.unlockAccount(address, password)
     // /*
     //     POST: /users/card
     //     registers a card for a new user
