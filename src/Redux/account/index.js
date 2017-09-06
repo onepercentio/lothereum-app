@@ -12,6 +12,7 @@ export const CLEAR_INFO = 'account/CLEAR_INFO'
 export const FETCH_BALANCE = 'account/FETCH_BALANCE'
 export const FINISHED_FETCHING_BALANCE = 'account/FINISHED_FETCHING_BALANCE'
 export const ERROR_FETCHING_BALANCE = 'account/ERROR_FETCHING_BALANCE'
+export const CREATE_RANDOM = 'account/CREATE_RANDOM'
 
 // Action creators
 export const setInfo = ({ address, privateKey }) => ({ type: SET_INFO, address, privateKey})
@@ -19,6 +20,7 @@ export const clearInfo = _ => ({ type: CLEAR_INFO })
 export const fetchBalance = _ => ({ type: FETCH_BALANCE })
 export const fetchResult = ({ balance }) => ({ type: FINISHED_FETCHING_BALANCE, balance })
 export const fetchError = ({ error }) => ({ type: ERROR_FETCHING_BALANCE, error })
+export const createRandom = _ => ({ type: CREATE_RANDOM })
 
 // reducer
 export default ( state = initialState, action ) => {
@@ -34,6 +36,8 @@ export default ( state = initialState, action ) => {
             return { ...state, balance: action.balance, fetching: false }
         case ERROR_FETCHING_BALANCE:
             return { ...state, fetching: false, error: action.error }
+        case CREATE_RANDOM:
+            return state
         default:
             return state
     }

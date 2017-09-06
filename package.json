@@ -6,6 +6,7 @@
   "dependencies": {
     "apisauce": "^0.14.1",
     "babel-polyfill": "^6.26.0",
+    "bip39": "^2.4.0",
     "eth-lightwallet": "^2.5.6",
     "moment": "^2.18.1",
     "react": "^15.6.1",

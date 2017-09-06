@@ -1,4 +1,5 @@
 import contracts from './contracts'
+import bip39 from 'bip39'
 
 async function runAllPromises (promises){
     let result = []
@@ -42,15 +43,16 @@ export default (api) => ({
         contractInterface.getPastEvents('NewTicket', { fromBlock: 1 }).then(r => console.log(r))
         return contractInterface.methods.buyTicket(numbers).send({from: address, value: ticketPrice, gas: 4000000})
             .on('transactionHash', hash => console.log('hash crap', hash))
-            .on('confirmation', (counter, receipt) => console.log('confirmation # ', counter, ' receipt = ', JSON.stringfy(receipt)))
-            .on('receipt', receipt => console.log(receipt))
-            .then(r => {console.log('===', r); return r})
-        .then(r => console.log('===', r))
         // return contractInterface.methods.buyTicket(numbers).estimateGas()
         // return contractInterface.methods.buyTicket(numbers).send({from: address, value: ticketPrice})
 
     },
-    login: ({ address, password }) => api.eth.personal.unlockAccount(address, password)
+    login: ({ address, password }) => api.eth.personal.unlockAccount(address, password),
+    createRandomAccount: _ => {
+        const mnemonic = bip39.generateMnemonic()
+        const seedHex = bip39.mnemonicToSeedHex(mnemonic)
+        return api.eth.personal.newAccount(seedHex).then(addr => ({ address: addr, privateKey: seedHex, mnemonic }))
+    }
     // /*
     //     POST: /users/card
     //     registers a card for a new user

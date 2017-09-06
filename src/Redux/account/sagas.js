@@ -1,7 +1,7 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects'
 import {
-  SET_INFO, FETCH_BALANCE,
-  fetchBalance, fetchResult, fetchError
+  SET_INFO, FETCH_BALANCE, CREATE_RANDOM,
+  fetchBalance, fetchResult, fetchError, setInfo
 } from '../account'
 import Api from '../../Api'
 
@@ -20,7 +20,18 @@ function* updateBalanceSaga() {
   yield put(fetchBalance())
 }
 
+function* createRandomAccount(action) {
+    try {
+        const { address, privateKey, mnemonic } = yield call(Api.createRandomAccount)
+        yield put(setInfo({ address, privateKey}))
+    } catch (e) {
+        console.log(" createRandomAccount error: ", e)
+    }
+
+}
+
 export default [
   takeLatest(FETCH_BALANCE, fetchBalanceSaga),
-  takeLatest(SET_INFO, updateBalanceSaga)
+  takeLatest(SET_INFO, updateBalanceSaga),
+  takeLatest(CREATE_RANDOM, createRandomAccount)
 ]

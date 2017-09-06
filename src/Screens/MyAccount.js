@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchBalance, setInfo, clearInfo } from '../Redux/account'
+import { fetchBalance, setInfo, clearInfo, createRandom } from '../Redux/account'
 import { ScreenContainer, BlockContainer, Logo, AccountBox, Button, Input } from '../UI'
 
 const mapStateToProps = ({ account }) => ({
@@ -11,7 +11,8 @@ const mapStateToProps = ({ account }) => ({
 const mapDispatchToProps = dispatch => ({
   fetchBalance: _ => dispatch(fetchBalance()),
   setInfo: info => dispatch(setInfo(info)),
-  clearInfo: _ => dispatch(clearInfo())
+  clearInfo: _ => dispatch(clearInfo()),
+  createRandom: _ => dispatch(createRandom())
 })
 
 class MyAccount extends Component {
@@ -31,11 +32,14 @@ class MyAccount extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
   }
 
-  handleCreate = () => this.props.setInfo({ address: '0x1802Dd945a19E6cA15a3C7B55A3CB566615faF73', privateKey: '9876543210'})
+  handleCreate = () => {
+      this.props.createRandom()
+    //   this.props.setInfo({ address: '0x1802Dd945a19E6cA15a3C7B55A3CB566615faF73', privateKey: '9876543210'})
+  }
   handleLogin = () => this.setState({ showLoginForm: true })
   handleRemove = () => this.props.clearInfo()
   handleFormChange = (info) => this.setState(info)
-  handleFormSubmit = _ => { 
+  handleFormSubmit = _ => {
     this.props.setInfo({ address: this.state.formAddress, privateKey: this.state.formKey })
     this.setState({ showLoginForm: false })
   }
@@ -50,7 +54,7 @@ class MyAccount extends Component {
           <Logo />
         </BlockContainer>
         <BlockContainer>
-          { showLoginForm ? 
+          { showLoginForm ?
           <BlockContainer>
             <BlockContainer>
               <Input label='Address' placeholder='Your address' onChange={({ target: { value: formAddress }}) => this.handleFormChange({ formAddress })}/>
@@ -59,8 +63,8 @@ class MyAccount extends Component {
             <Button onClick={this.handleFormSubmit}>Login</Button>
           </BlockContainer> :
             address ?
-          <AccountBox 
-            address={address} 
+          <AccountBox
+            address={address}
             balance={balance}
             onRemove={this.handleRemove}/> :
             <BlockContainer>
