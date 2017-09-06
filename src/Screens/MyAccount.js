@@ -58,7 +58,7 @@ class MyAccount extends Component {
           <BlockContainer>
             <BlockContainer>
               <Input label='Address' placeholder='Your address' onChange={({ target: { value: formAddress }}) => this.handleFormChange({ formAddress })}/>
-              <Input label='Private Key' placeholder='Your private key' onChange={({ target: { value: formKey }}) => this.handleFormChange({ formKey })}/>
+              <Input label='Password' placeholder='Your password' onChange={({ target: { value: formKey }}) => this.handleFormChange({ formKey })}/>
             </BlockContainer>
             <Button onClick={this.handleFormSubmit}>Login</Button>
           </BlockContainer> :

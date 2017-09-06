@@ -7,7 +7,7 @@ import { TicketBox, ScreenContainer, BlockContainer, Logo, DrawingInfo } from '.
 
 const mapStateToProps = ({ lotteries, tickets }) => {
   let currentDrawing = getNextLottery(lotteries)
-  return { currentDrawing, tickets: getTicketsForLottery(tickets, { lotteryId: currentDrawing.drawingIndex })}
+  return { currentDrawing, tickets: getTicketsForLottery(tickets, { lotteryId: currentDrawing.drawingCounter })}
 }
 const mapDispatchToProps = dispatch => ({
   fetchLotteries: () => dispatch(fetchLotteries()),
@@ -25,7 +25,7 @@ class CurrentDrawing extends Component {
 
   render() {
     let {
-      currentDrawing: { drawingIndex, prize, nextDrawingDate },
+      currentDrawing: { drawingCounter, prize, nextDrawingDate },
       tickets
     } = this.props
 
@@ -33,7 +33,7 @@ class CurrentDrawing extends Component {
       <ScreenContainer>
         <BlockContainer>
           <Logo />
-          <DrawingInfo id={drawingIndex} prize={prize} date={nextDrawingDate}/>
+          <DrawingInfo id={drawingCounter} prize={prize} date={nextDrawingDate}/>
         </BlockContainer>
         <BlockContainer>
           <TicketBox

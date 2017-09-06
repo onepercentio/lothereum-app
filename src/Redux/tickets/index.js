@@ -5,30 +5,24 @@ const initialState = {
 }
 
 // Action constants
+export const PUSH_TICKET = 'tickets/PUSH_TICKET'
 export const FETCH_TICKETS = 'tickets/FETCH_TICKETS'
 export const FINISHED_FETCHING_TICKETS = 'tickets/FINISHED_FETCHING_TICKETS'
 export const ERROR_FETCHING_TICKETS = 'tickets/ERROR_FETCHING_TICKETS'
 
 // Action creators
-export const fetchTickets = () => ({
-    type: FETCH_TICKETS
-})
-
-export const fetchResult = ({ list }) => ({
-    type: FINISHED_FETCHING_TICKETS,
-    list
-})
-
-export const fetchError = ({ error }) => ({
-    type: ERROR_FETCHING_TICKETS,
-    error
-})
+export const pushTicket = ({ ticket }) => ({ type: PUSH_TICKET, ticket })
+export const fetchTickets = () => ({ type: FETCH_TICKETS })
+export const fetchResult = ({ list }) => ({ type: FINISHED_FETCHING_TICKETS, list })
+export const fetchError = ({ error }) => ({ type: ERROR_FETCHING_TICKETS, error })
 
 export const setTickets = fetchResult
 
 // reducer
 export default (state = initialState, action) => {
     switch(action.type) {
+        case PUSH_TICKET:
+            return { ...state, list: [...state.list, action.ticket]}
         case FETCH_TICKETS:
             return { ...state, fetching: true, error: null }
         case FINISHED_FETCHING_TICKETS:

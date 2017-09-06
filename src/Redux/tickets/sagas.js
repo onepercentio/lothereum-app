@@ -1,8 +1,9 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects'
 import { 
   FETCH_TICKETS,
-  fetchResult, fetchError
+  fetchTickets, fetchResult, fetchError
 } from '../tickets'
+import { CHANGE_ROUTE } from '../router'
 import Api from '../../Api'
 
 function* fetchTicketsSaga(action) {
@@ -12,12 +13,18 @@ function* fetchTicketsSaga(action) {
       contractAddress: state.lotteries.list[0].id
     }))
     const tickets = address ? yield call(Api.getTickets, {address, contractAddress}) : []
+    console.log('xou', tickets)
     yield put(fetchResult({ list: tickets }))
   } catch (e) {
     yield put(fetchError({ error: e.message }))
   }
 }
 
+function* fetchTicketsWhenRoute(action) {
+  if(action.route === 'home') yield put(fetchTickets())
+}
+
 export default [ 
-  takeLatest(FETCH_TICKETS, fetchTicketsSaga)
+  takeLatest(FETCH_TICKETS, fetchTicketsSaga),
+  takeLatest(CHANGE_ROUTE, fetchTicketsWhenRoute)
 ]
