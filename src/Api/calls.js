@@ -28,9 +28,12 @@ export default (api) => ({
             }).then(lotto => c.methods.draws(lotto.drawingIndex).call().then(({ total }) => ({...lotto, prize: total})))
         ))
     },
-    getTickets: ({ address }) =>
-        // new Promise(resolve => setTimeout(_ => resolve([{ id: 13, lotteryId: 597364, numbers: [10, 20, 30, 40, 50, 60]}]),1500)),
-        new Promise(resolve => setTimeout(_ => resolve([]),1500)),
+    getTickets: ({ address, contractAddress }) => {
+        let contract = contracts.find(c => c.address === contractAddress)
+        let contractInterface = new api.eth.Contract(contract.abi, contract.address)
+        return contractInterface.getPastEvents('NewTicket', { filter: { holder: address }})
+        .then(tickets => tickets) // implement necessary transformations
+    },
     buyTicket: ({ address, numbers, ticketPrice, contractAddress }) => {
         // current will be passed someday when there is more than 1 contract
         let contract = contracts.find(c => c.address === contractAddress)

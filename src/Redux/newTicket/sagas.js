@@ -3,7 +3,7 @@ import {
   BUY_TICKET,
   transactionResult, transactionError
 } from '../newTicket'
-import { setTickets } from '../tickets'
+// import { setTickets } from '../tickets'
 import { changeRoute } from '../router'
 import Api from '../../Api'
 

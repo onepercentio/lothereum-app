@@ -7,8 +7,11 @@ import Api from '../../Api'
 
 function* fetchTicketsSaga(action) {
   try {
-    const address = yield select(state => state.account.address)
-    const tickets = address ? yield call(Api.getTickets, {address}) : []
+    const { address, contractAddress } = yield select(state => ({
+      address: state.account.address,
+      contractAddress: state.lotteries.list[0].id
+    }))
+    const tickets = address ? yield call(Api.getTickets, {address, contractAddress}) : []
     yield put(fetchResult({ list: tickets }))
   } catch (e) {
     yield put(fetchError({ error: e.message }))
