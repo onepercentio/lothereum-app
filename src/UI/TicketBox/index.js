@@ -9,10 +9,11 @@ export default ({ tickets = [], onBuyOne }) => (
                 <p>You have no tickets for this drawing.</p>
                 <a className="BuyOne" onClick={onBuyOne}><h2>Buy one now!</h2></a>
             </div>
-        ) : tickets.map(ticket => 
+        ) : tickets.map((ticket, i) => 
             <Ticket
-              key={ticket.id}
+              key={i}
               ticketId={ticket.id}
+              processing={ticket.processing}
               numbers={ticket.numbers} />
         )}
     </div>

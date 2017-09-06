@@ -7,7 +7,6 @@ import { TicketBox, ScreenContainer, BlockContainer, Logo, DrawingInfo } from '.
 
 const mapStateToProps = ({ lotteries, tickets }) => {
   let currentDrawing = getNextLottery(lotteries)
-  console.log('curr: ', currentDrawing)
   return { currentDrawing, tickets: getTicketsForLottery(tickets, { lotteryId: currentDrawing.drawingCounter })}
 }
 const mapDispatchToProps = dispatch => ({
