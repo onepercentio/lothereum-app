@@ -5,7 +5,8 @@ import { ScreenContainer, BlockContainer, Logo, AccountBox, Button, Input } from
 
 const mapStateToProps = ({ account }) => ({
   address: account.address,
-  balance: account.balance
+  balance: account.balance,
+  privateKey: account.privateKey
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -45,7 +46,7 @@ class MyAccount extends Component {
   }
 
   render() {
-    let { address, balance } = this.props
+    let { address, balance, privateKey } = this.props
     let { showLoginForm } = this.state
 
     return (
@@ -66,6 +67,7 @@ class MyAccount extends Component {
           <AccountBox
             address={address}
             balance={balance}
+            privateKey={privateKey}
             onRemove={this.handleRemove}/> :
             <BlockContainer>
               <BlockContainer>

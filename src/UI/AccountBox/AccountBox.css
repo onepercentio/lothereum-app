@@ -15,6 +15,9 @@
 .AccountInfo b {
     color: black;
 }
+.AccountInfo div {
+    cursor: pointer;
+}
 .AccountContainer button {
     border: none;
     font-size: 14px;
