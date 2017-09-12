@@ -31,9 +31,9 @@ export default (api) => ({
     getTickets: ({ address, contractAddress }) => {
         let contract = contracts.find(c => c.address === contractAddress)
         let contractInterface = new api.eth.Contract(contract.abi, contract.address)
-        return contractInterface.getPastEvents('NewTicket', { fromBlock: 1, filter: { holder: address }})
-        .then(l => {console.log(l); return l})
-        .then(tickets => tickets.filter(t => t.returnValues[1] === address).map(t => ({
+        return contractInterface.getPastEvents('NewTicket', { fromBlock: 1650000, filter: { holder: address }})
+        // .then(l => {console.log(l); return l})
+        .then(tickets => tickets.filter(t => String(t.returnValues[1]).toLowerCase() === String(address).toLowerCase()).map(t => ({
             lotteryId: t.returnValues[0],
             id: t.returnValues[2],
             numbers: t.returnValues[3]

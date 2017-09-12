@@ -13,7 +13,6 @@ function* fetchTicketsSaga(action) {
       contractAddress: state.lotteries.list[0].id
     }))
     const tickets = address ? yield call(Api.getTickets, {address, contractAddress}) : []
-    console.log('xou', tickets)
     yield put(fetchResult({ list: tickets }))
   } catch (e) {
     yield put(fetchError({ error: e.message }))
