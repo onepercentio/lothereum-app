@@ -19,7 +19,7 @@ export default class extends Component {
             <div className="AccountInfo"><b>Current account: </b> { address }</div>
             <div className="AccountInfo"><b>Password (click to show/hide):</b>
                 <div onClick={_ => this.setState({ showKey: !showKey })}>
-                    { showKey ? privateKey : <i>***********</i> }
+                    { showKey ? privateKey || '- -(empty)' : <i>***********</i> }
                 </div>
             </div>
             <div className="AccountInfo"><b>Balance: </b> { fromWei(balance) } ether</div>
