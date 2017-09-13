@@ -4,6 +4,6 @@ import qrcode from 'qrcode-js'
 
 export default ({ data }) => (
     <div className="QRCodeContainer">
-        <img src={`data:image/png;base64,${qrcode.toBase64(data, 4)}`}/>
+        <img alt="qrcode" src={`data:image/png;base64,${qrcode.toBase64(data, 4)}`}/>
     </div>
 )

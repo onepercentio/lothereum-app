@@ -1,4 +1,4 @@
-import Web3 from '../web3'
+import Web3 from 'web3'
 import apiCalls from './calls'
 
 const END_POINT = "https://ropsten.infura.io/Tbh0rdlz4fqktixk6gL7"
