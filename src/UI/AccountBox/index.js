@@ -17,7 +17,7 @@ export default class extends Component {
         return (
         <div className="AccountContainer">
             <div className="AccountInfo"><b>Current account: </b> { address }</div>
-            <div className="AccountInfo"><b>Password (click to show/hide):</b>
+            <div className="AccountInfo"><b>Private Key (click to show/hide):</b>
                 <div onClick={_ => this.setState({ showKey: !showKey })}>
                     { showKey ? privateKey || '- -(empty)' : <i>***********</i> }
                 </div>
