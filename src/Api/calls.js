@@ -1,5 +1,4 @@
 import contracts from './contracts'
-import bip39 from 'bip39'
 
 async function runAllPromises (promises){
     let result = []
@@ -31,7 +30,10 @@ export default (api) => ({
     getTickets: ({ address, contractAddress }) => {
         let contract = contracts.find(c => c.address === contractAddress)
         let contractInterface = new api.eth.Contract(contract.abi, contract.address)
-        return contractInterface.getPastEvents('NewTicket', { fromBlock: 1650000, filter: { holder: address }})
+        
+        window.contract = contractInterface
+        
+        return contractInterface.getPastEvents('NewTicket', { fromBlock: 1665000, filter: { holder: address }})
         // .then(l => {console.log(l); return l})
         .then(tickets => tickets.filter(t => String(t.returnValues[1]).toLowerCase() === String(address).toLowerCase()).map(t => ({
             lotteryId: t.returnValues[0],
@@ -39,84 +41,14 @@ export default (api) => ({
             numbers: t.returnValues[3]
         })))
     },
-    buyTicket: ({ address, numbers, ticketPrice, contractAddress }) => {
+    buyTicket: ({ numbers, privateKey, ticketPrice, contractAddress }) => {
         // current will be passed someday when there is more than 1 contract
         let contract = contracts.find(c => c.address === contractAddress)
         let contractInterface = new api.eth.Contract(contract.abi, contract.address)
-        return contractInterface.methods.buyTicket(numbers).send({from: address, value: ticketPrice, gas: 4000000})
-            .on('transactionHash', hash => console.log('hash crap', hash))
-        // return contractInterface.methods.buyTicket(numbers).estimateGas()
-        // return contractInterface.methods.buyTicket(numbers).send({from: address, value: ticketPrice})
-
+        let data = contractInterface.methods.buyTicket(numbers).encodeABI()
+        return api.eth.accounts.signTransaction({data, to: contract.address, value: ticketPrice, gas: 4500000}, privateKey)
+            .then(info => api.eth.sendSignedTransaction(info.rawTransaction))
     },
     login: ({ address, password }) => api.eth.personal.unlockAccount(address, password),
-    createRandomAccount: _ => {
-        const mnemonic = bip39.generateMnemonic()
-        const seedHex = bip39.mnemonicToSeedHex(mnemonic)
-        return api.eth.personal.newAccount(seedHex).then(addr => ({ address: addr, privateKey: seedHex, mnemonic }))
-    }
-    // /*
-    //     POST: /users/card
-    //     registers a card for a new user
-    // */
-    // saveCreditCard: ( { cardNumber, holderName, issuer, cvv, dueDate }) =>
-    //     api.post('users/card', {
-    //         cardNumber, holderName, issuer, cvv, dueDate
-    //     }),
-
-    // /*
-    //     POST: /users/:id/card
-    //     registers a new card for an existing user
-    // */
-    // addCreditCardToUser: ({ userId, cardNumber, holderName, issuer, cvv, dueDate }) =>
-    //     api.post(`users/${userId}/card`, {
-    //         cardNumber, holderName, issuer, cvv, dueDate
-    //     }),
-
-    // /*
-    //     GET: /users/:id
-    //     gets information for the referenced user
-    // */
-    // getUserInfo: ({ id }) => getOnce(`Users/${id}`),
-
-    // /*
-    //     POST: /payment
-    //     registers a card for a new user
-    // */
-    // makePayment: ({ cardToken, payer, payee, transactionValue, conditions, calculatedValues }) =>
-    //     api.post('payment', {
-    //         cardToken, payer, payee, transactionValue, conditions, calculatedValues
-    //     }),
-
-    // /*
-    //     PUT: users/:id/selectedcard
-    //     updates the preferred card for the user
-    // */
-    // updatePreferredCard: ({ userId, token }) =>
-    //     updateValue(`Users/${userId}/preferences`, { selectedCard: token }),
-
-    // getFeeInfo: () => {
-    //     return new Promise((resolve, reject) => {
-    //         setTimeout(() => {
-    //             resolve({
-    //                 ok: true,
-    //                 problem: null,
-    //                 data: {
-    //                     default: 0.0499,
-    //                     visa: [{installments: 1, fee: 0.0499}],
-    //                     master: [{installments: 1, fee: 0.0499}]
-    //                 }
-    //             })
-    //         }, 3000)
-    //     })
-    // },
-
-    // requestPhoneAuthentication: ({ phoneNumber, deviceInfo }) => {
-    //     return new Promise((resolve, reject) => setTimeout(_ => resolve({ ok: true, data: {} }), 1200))
-    // },
-
-    // verifyPhone: ({ phoneNumber, deviceInfo, pin }) => {
-    //     let responseData = { token: 'abcdefg' , userId: '123' }
-    //     return new Promise((resolve, reject) => setTimeout(_ => resolve({ ok: true, data: responseData }, 1000)))
-    // }
+    createRandomAccount: _ => api.eth.accounts.create()
 })

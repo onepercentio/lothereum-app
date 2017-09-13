@@ -23,7 +23,7 @@ function* updateBalanceSaga() {
 function* createRandomAccount(action) {
     try {
         const { address, privateKey } = yield call(Api.createRandomAccount)
-        yield put(setInfo({ address, privateKey}))
+        yield put(setInfo({ address, privateKey }))
     } catch (e) {
         console.log(" createRandomAccount error: ", e)
     }
