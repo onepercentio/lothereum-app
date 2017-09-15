@@ -63,12 +63,12 @@ class BuyTicket extends Component {
 
   render() {
     let { showPurchaseConfirmation } = this.state
-    let { numbers, lottery: { drawingIndex, prize, maxDrawableNumber, numbersPerTicket, nextDrawingDate }} = this.props
+    let { numbers, lottery: { drawingCounter, prize, maxDrawableNumber, numbersPerTicket, nextDrawingDate }} = this.props
     return (
       <ScreenContainer>
         <BlockContainer>
             <Logo />
-            <DrawingInfo id={drawingIndex} prize={prize} date={nextDrawingDate}/>
+            <DrawingInfo id={drawingCounter} prize={prize} date={nextDrawingDate}/>
         </BlockContainer>
         { showPurchaseConfirmation ? (
           <ScreenContainer>
