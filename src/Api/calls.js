@@ -9,6 +9,7 @@ async function runAllPromises (promises){
 }
 
 export default (api) => ({
+    getEthPrice: () => fetch('https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=USD').then(r => r),
     getBalance: ({ address }) =>
         api.eth.getBalance(address),
     getLotteries: _ =>{
@@ -30,9 +31,9 @@ export default (api) => ({
     getTickets: ({ address, contractAddress }) => {
         let contract = contracts.find(c => c.address === contractAddress)
         let contractInterface = new api.eth.Contract(contract.abi, contract.address)
-        
+
         window.contract = contractInterface
-        
+
         return api.eth.getBlockNumber()
         .then(block => contractInterface.getPastEvents('NewTicket', { fromBlock: block - 50000, filter: { holder: address }}))
         .then(tickets => tickets.filter(t => String(t.returnValues[1]).toLowerCase() === String(address).toLowerCase()).map(t => ({
