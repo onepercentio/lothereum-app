@@ -31,8 +31,6 @@ export default (api) => ({
         let contract = contracts.find(c => c.address === contractAddress)
         let contractInterface = new api.eth.Contract(contract.abi, contract.address)
         
-        window.contract = contractInterface
-        
         return api.eth.getBlockNumber()
         .then(block => contractInterface.getPastEvents('NewTicket', { fromBlock: block - 50000, filter: { holder: address }}))
         .then(tickets => tickets.filter(t => String(t.returnValues[1]).toLowerCase() === String(address).toLowerCase()).map(t => ({
@@ -43,16 +41,13 @@ export default (api) => ({
     },
     buyTicket: ({ numbers, privateKey, ticketPrice, contractAddress }) => {
         // current will be passed someday when there is more than 1 contract
-        console.log('-',numbers,privateKey,ticketPrice,contractAddress)
         let contract = contracts.find(c => c.address === contractAddress)
         let contractInterface = new api.eth.Contract(contract.abi, contract.address)
-        window.contract = contractInterface
-        window.acc = api.eth.accounts.privateKeyToAccount(privateKey)
         let data = contractInterface.methods.buyTicket(numbers).encodeABI()
-        console.log('data', data)
         return api.eth.accounts.signTransaction({to: contractAddress, data, value: ticketPrice, gas: "4000000"}, privateKey)
-            .then(r => r.rawTransaction)
-            .then(r => setTimeout(() => api.eth.sendSignedTransaction(r),1000))
+            .then(t => {console.log(t); return t})
+            .then(r => setTimeout(() => api.eth.sendSignedTransaction(r.rawTransaction),1000))
+            // .then(info => api.eth.sendSignedTransaction(info.rawTransaction))
     },
     login: ({ address, password }) => api.eth.personal.unlockAccount(address, password),
     createRandomAccount: _ => api.eth.accounts.create()
