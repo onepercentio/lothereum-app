@@ -25,7 +25,7 @@ export default (api) => ({
             ]).then(lotto => {
                 let [name, ticketPrice, drawingCounter, maxDrawableNumber, numbersPerTicket, nextDrawingDate] = lotto
                 return { name, ticketPrice, drawingCounter, maxDrawableNumber, numbersPerTicket, nextDrawingDate, id: contracts[i].address }
-            }).then(lotto => c.methods.draws(lotto.drawingCounter).call().then(({ total }) => ({...lotto, prize: total})))
+            }).then(lotto => c.methods.draws(lotto.drawingCounter).call().then(({ total }) => ({...lotto, prize: (total/1000000000000000000) * 0.98 })))
         ))
     },
     getTickets: ({ address, contractAddress }) => {
