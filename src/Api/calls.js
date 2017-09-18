@@ -46,8 +46,7 @@ export default (api) => ({
         let contractInterface = new api.eth.Contract(contract.abi, contract.address)
         let data = contractInterface.methods.buyTicket(numbers).encodeABI()
         return api.eth.accounts.signTransaction({to: contractAddress, data, value: ticketPrice, gas: "4000000"}, privateKey)
-            .then(t => {console.log(t); return t})
-            .then(r => setTimeout(() => api.eth.sendSignedTransaction(r.rawTransaction),1000))
+            .then(r => api.eth.sendSignedTransaction(r.rawTransaction))
             // .then(info => api.eth.sendSignedTransaction(info.rawTransaction))
     },
     login: ({ address, password }) => api.eth.personal.unlockAccount(address, password),

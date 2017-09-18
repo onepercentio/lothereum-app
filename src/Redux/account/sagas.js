@@ -27,7 +27,6 @@ function* createRandomAccount(action) {
     } catch (e) {
         console.log(" createRandomAccount error: ", e)
     }
-
 }
 
 export default [

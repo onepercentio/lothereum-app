@@ -24,7 +24,6 @@ export const createRandom = _ => ({ type: CREATE_RANDOM })
 
 // reducer
 export default ( state = initialState, action ) => {
-    console.log(action.type)
     switch(action.type){
         case SET_INFO:
             return { ...state, address: action.address, privateKey: action.privateKey }

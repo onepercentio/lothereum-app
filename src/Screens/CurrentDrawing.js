@@ -37,7 +37,7 @@ class CurrentDrawing extends Component {
         </BlockContainer>
         <BlockContainer>
           <TicketBox
-            tickets={ tickets }
+            tickets={ tickets.sort(({id: id1 = Number.POSITIVE_INFINITY}, {id: id2 = Number.POSITIVE_INFINITY}) => id2 - id1) }
             onBuyOne={ this.handleBuyTicket }
             />
         </BlockContainer>
