@@ -9,7 +9,7 @@ import Api from '../../Api'
 function* fetchTicketsSaga(action) {
   try {
     const { address, contractAddress, currentTickets } = yield select(state => ({
-      address: state.account.address,
+      address: state.account.destinationAddress || state.account.address,
       contractAddress: state.lotteries.list[0].id,
       currentTickets: state.tickets.list.filter(ticket => ticket.processing === true)
     }))
@@ -23,7 +23,7 @@ function* fetchTicketsSaga(action) {
 function* clearAndFetchTicketsSaga(action) {
   try {
     const { address, contractAddress } = yield select(state => ({
-      address: state.account.address,
+      address: state.account.destinationAddress || state.account.address,
       contractAddress: state.lotteries.list[0].id,
       currentTickets: state.tickets.list.filter(ticket => ticket.processing === true)
     }))

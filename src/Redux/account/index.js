@@ -9,6 +9,7 @@ const initialState = {
 
 // Action constants
 export const SET_INFO = 'account/SET_INFO'
+export const SET_DESTINATION_ADDRESS = 'account/SET_DESTINATION_ADDRESS'
 export const CLEAR_INFO = 'account/CLEAR_INFO'
 export const FETCH_BALANCE = 'account/FETCH_BALANCE'
 export const FINISHED_FETCHING_BALANCE = 'account/FINISHED_FETCHING_BALANCE'
@@ -17,6 +18,7 @@ export const CREATE_RANDOM = 'account/CREATE_RANDOM'
 
 // Action creators
 export const setInfo = ({ address, privateKey }) => ({ type: SET_INFO, address, privateKey})
+export const setDestination = ({ destinationAddress }) => ({ type: SET_DESTINATION_ADDRESS, destinationAddress })
 export const clearInfo = _ => ({ type: CLEAR_INFO })
 export const fetchBalance = _ => ({ type: FETCH_BALANCE })
 export const fetchResult = ({ balance }) => ({ type: FINISHED_FETCHING_BALANCE, balance })
@@ -28,6 +30,8 @@ export default ( state = initialState, action ) => {
     switch(action.type){
         case SET_INFO:
             return { ...state, address: action.address, privateKey: action.privateKey }
+        case SET_DESTINATION_ADDRESS:
+            return { ...state, destinationAddress: action.destinationAddress }
         case CLEAR_INFO:
             return initialState
         case FETCH_BALANCE:

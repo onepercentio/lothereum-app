@@ -1,8 +1,10 @@
 import React from 'react'
 import './input.css'
 
-export default ({ onChange, label, placeholder, secure = false }) =>
+const handleChange = func => event => func(event.target.value)
+
+export default ({ onChange, label, placeholder, secure = false, value='' }) =>
     <div className="InputContainer">
-        <h4>{label}</h4>
-        <input onChange={onChange} type={ secure ? 'password' : 'text'} placeholder={placeholder} />
+        { label ? <h4>{label}</h4> : null }
+        <input onChange={handleChange(onChange)} type={ secure ? 'password' : 'text'} placeholder={placeholder} value={value}/>
     </div>
