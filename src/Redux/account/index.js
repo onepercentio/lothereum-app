@@ -1,6 +1,7 @@
 const initialState = {
     address: '',
     privateKey: '',
+    destinationAddress: '',
     balance: 0,
     fetching: false,
     error: null

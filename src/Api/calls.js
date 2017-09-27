@@ -40,11 +40,11 @@ export default (api) => ({
             numbers: t.returnValues[3]
         })))
     },
-    buyTicket: ({ numbers, privateKey, ticketPrice, contractAddress }) => {
+    buyTicket: ({ numbers, address, privateKey, ticketPrice, contractAddress }) => {
         // current will be passed someday when there is more than 1 contract
         let contract = contracts.find(c => c.address === contractAddress)
         let contractInterface = new api.eth.Contract(contract.abi, contract.address)
-        let data = contractInterface.methods.buyTicket(numbers).encodeABI()
+        let data = contractInterface.methods.buyTicket(numbers, address).encodeABI()
         return api.eth.accounts.signTransaction({to: contractAddress, data, value: ticketPrice, gas: "4000000"}, privateKey)
             .then(r => api.eth.sendSignedTransaction(r.rawTransaction))
             // .then(info => api.eth.sendSignedTransaction(info.rawTransaction))

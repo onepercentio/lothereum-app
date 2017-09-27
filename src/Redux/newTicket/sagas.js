@@ -29,6 +29,7 @@ function* buyTicketSaga(action) {
       succeeded = true
       // set tickets -> add new ticket if processed
     } catch (e) {
+      console.log(e)
       if(e.message.indexOf('50 blocks') !== -1 || e.message.indexOf('known transaction') !== -1 || e.message.indexOf('replacement') !== -1){
         succeeded = true
       } else {
