@@ -32,6 +32,7 @@ function* buyTicketSaga(action) {
     } catch (e) {
       console.log(e)
       if(e.message.indexOf('50 blocks') !== -1 || e.message.indexOf('known transaction') !== -1 || e.message.indexOf('replacement') !== -1){
+        if(e.message.indexOf('replacement') !== -1) alert('A previous transaction is still being processed. Please wait.')
         succeeded = true
       } else {
         yield call(delay, 2000)
