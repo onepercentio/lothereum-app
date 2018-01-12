@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchLotteries, getNextLottery } from '../Redux/lotteries'
 import { changeRoute } from '../Redux/router'
-import { fetchTickets, getTicketsForLottery } from '../Redux/tickets'
-import { TicketBox, ScreenContainer, BlockContainer, Logo, DrawingInfo } from '../UI'
+import { fetchTickets } from '../Redux/tickets'
+import { ScreenContainer, BlockContainer, } from '../UI'
 
 const mapStateToProps = ({ lotteries, tickets }) => {
-  let currentDrawing = getNextLottery(lotteries)
-  return { currentDrawing, tickets: getTicketsForLottery(tickets, { lotteryId: currentDrawing.drawingCounter })}
+  let currentDrawing = lotteries
+  return { currentDrawing }
 }
 const mapDispatchToProps = dispatch => ({
   fetchLotteries: () => dispatch(fetchLotteries()),
@@ -16,30 +16,15 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class CurrentDrawing extends Component {
-  constructor(props){
-    super(props)
-    this.handleBuyTicket = this.handleBuyTicket.bind(this)
-  }
-
-  handleBuyTicket = () => this.props.buyTicket()
-
   render() {
     let {
-      currentDrawing: { drawingCounter, prize, nextDrawingDate },
-      tickets
+      currentDrawing
     } = this.props
 
     return (
       <ScreenContainer>
         <BlockContainer>
-          <Logo />
-          <DrawingInfo id={drawingCounter} prize={prize} date={nextDrawingDate}/>
-        </BlockContainer>
-        <BlockContainer>
-          <TicketBox
-            tickets={ tickets.sort(({id: id1 = Number.POSITIVE_INFINITY}, {id: id2 = Number.POSITIVE_INFINITY}) => id2 - id1) }
-            onBuyOne={ this.handleBuyTicket }
-            />
+          {JSON.stringify(currentDrawing)}
         </BlockContainer>
       </ScreenContainer>
     )

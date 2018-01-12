@@ -8,6 +8,7 @@ import Api from '../../Api'
 function* fetchLotteriesSaga(action) {
   try {
     const lotteries = yield call(Api.getLotteries)
+    console.log('========')
     yield put(fetchResult({ list: lotteries }))
   } catch (e) {
     console.log('ee ' + e)

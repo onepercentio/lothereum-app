@@ -13,20 +13,10 @@ export default (api) => ({
     getBalance: ({ address }) =>
         api.eth.getBalance(address),
     getLotteries: _ =>{
-        let contractInterfaces = contracts.map(({abi, address }) => new api.eth.Contract(abi, address))
-        return Promise.all(contractInterfaces.map((c, i) =>
-            runAllPromises([
-                c.methods.name().call,
-                c.methods.ticketPrice().call,
-                c.methods.drawingCounter().call,
-                c.methods.maxDrawableNumber().call,
-                c.methods.numbersPerTicket().call,
-                c.methods.nextDrawingDate().call,
-            ]).then(lotto => {
-                let [name, ticketPrice, drawingCounter, maxDrawableNumber, numbersPerTicket, nextDrawingDate] = lotto
-                return { name, ticketPrice, drawingCounter, maxDrawableNumber, numbersPerTicket, nextDrawingDate, id: contracts[i].address }
-            }).then(lotto => c.methods.draws(lotto.drawingCounter).call().then(({ total }) => ({...lotto, prize: (total/1000000000000000000) * 0.98 })))
-        ))
+        let abi = require('human-standard-token-abi')
+        let contractInterface = new api.eth.Contract(abi, '0x4057a50c61814eac8342a1241ef3a4811cea23a8')
+        return api.eth.getBlockNumber()
+            .then(block => contractInterface.getPastEvents('Transfer', { fromBlock: block - 50000, filter: { from: '0x99edce9cec1296590b67402a73c780baeb51c4ad' }}))
     },
     getTickets: ({ address, contractAddress }) => {
         let contract = contracts.find(c => c.address === contractAddress)

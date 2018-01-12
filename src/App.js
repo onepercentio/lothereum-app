@@ -4,11 +4,11 @@ import store from './Redux/store'
 import { changeRoute } from './Redux/router'
 
 import { ScreenContainer, ContentContainer, Navigation } from './UI'
-import { CurrentDrawing, BuyTicket, MyAccount } from './Screens'
+import { CurrentDrawing } from './Screens'
 
 // import Web3 from 'web3'
 
-const routes = [{ name: 'home', title: 'Home' }, { name: 'buy', title: 'Buy Ticket' }, { name: 'account', title: 'My Account' }]
+const routes = [{ name: 'home', title: 'Home' }]
 
 // const lothereumAddr = '0x232d0444cfbeb141ef6bddda25634f9fa91587b7'
 
@@ -27,9 +27,7 @@ const Router = connect(mapStateToProps, mapDispatchToProps)(class extends Compon
         changeRoute={ changeRoute }
         routes={ routes }/>
       <ContentContainer>
-        { route === 'home' ? <CurrentDrawing /> :
-          route === 'buy' ? <BuyTicket options={options}/> :
-          route === 'account' ? <MyAccount /> : null } 
+        { route === 'home' ? <CurrentDrawing /> : null } 
       </ContentContainer>
     </ScreenContainer>
   }

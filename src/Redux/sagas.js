@@ -11,9 +11,9 @@ import newTicketSagas from './newTicket/sagas'
 
 function* afterRehydrate() {
   yield put(fetchLotteries())
-  yield put(clearAndFetchTickets())
-  let address = yield select(state => state.account.address)
-  if(address) yield put(fetchBalance())
+  // yield put(clearAndFetchTickets())
+  // let address = yield select(state => state.account.address)
+  // if(address) yield put(fetchBalance())
 }
 
 function* sagas() {

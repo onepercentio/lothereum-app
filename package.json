@@ -8,6 +8,7 @@
     "babel-polyfill": "^6.26.0",
     "bip39": "^2.4.0",
     "eth-lightwallet": "^2.5.6",
+    "human-standard-token-abi": "^1.0.2",
     "moment": "^2.18.1",
     "qrcode-js": "0.0.2",
     "react": "^15.6.1",
