@@ -12,7 +12,7 @@ import { changeRoute } from '../router'
 import Api from '../../Api'
 
 function* buyTicketSaga(action) {
-  const { address, privateKey, destinationAddress } = yield select(state => state.account)
+  const { address, destinationAddress } = yield select(state => state.account)
   const { numbers, ticketPrice, contractAddress, lotteryId } = yield select(state => ({
       numbers: state.newTicket.numbers,
       ticketPrice: state.lotteries.list[0].ticketPrice,
@@ -26,7 +26,8 @@ function* buyTicketSaga(action) {
   while(!succeeded){
     try {
       // this is done async with no expected result
-      yield call(() => Api.buyTicket({ address: userAddress, privateKey, numbers, ticketPrice, contractAddress }))
+      let request = yield call(() => Api.buyTicket({ address: userAddress, numbers, ticketPrice, contractAddress }))
+      console.log(request)
       succeeded = true
       // set tickets -> add new ticket if processed
     } catch (e) {

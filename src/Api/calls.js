@@ -8,12 +8,12 @@ async function runAllPromises (promises){
     return result
 }
 
-export default (api) => ({
+export default () => ({
     getEthPrice: () => fetch('https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=USD').then(r => r),
     getBalance: ({ address }) =>
-        api.eth.getBalance(address),
+        window.web3js.eth.getBalance(address),
     getLotteries: _ =>{
-        let contractInterfaces = contracts.map(({abi, address }) => new api.eth.Contract(abi, address))
+        let contractInterfaces = contracts.map(({abi, address }) => new window.web3js.eth.Contract(abi, address))
         return Promise.all(contractInterfaces.map((c, i) =>
             runAllPromises([
                 c.methods.name().call,
@@ -30,9 +30,9 @@ export default (api) => ({
     },
     getTickets: ({ address, contractAddress }) => {
         let contract = contracts.find(c => c.address === contractAddress)
-        let contractInterface = new api.eth.Contract(contract.abi, contract.address)
+        let contractInterface = new window.web3js.eth.Contract(contract.abi, contract.address)
         
-        return api.eth.getBlockNumber()
+        return window.web3js.eth.getBlockNumber()
         .then(block => contractInterface.getPastEvents('NewTicket', { fromBlock: block - 50000, filter: { holder: address }}))
         .then(tickets => tickets.filter(t => String(t.returnValues[1]).toLowerCase() === String(address).toLowerCase()).map(t => ({
             lotteryId: t.returnValues[0],
@@ -43,12 +43,11 @@ export default (api) => ({
     buyTicket: ({ numbers, address, privateKey, ticketPrice, contractAddress }) => {
         // current will be passed someday when there is more than 1 contract
         let contract = contracts.find(c => c.address === contractAddress)
-        let contractInterface = new api.eth.Contract(contract.abi, contract.address)
+        let contractInterface = new window.web3js.eth.Contract(contract.abi, contract.address)
         let data = contractInterface.methods.buyTicket(numbers, address).encodeABI()
-        return api.eth.accounts.signTransaction({to: contractAddress, data, value: ticketPrice, gas: "4000000"}, privateKey)
-            .then(r => api.eth.sendSignedTransaction(r.rawTransaction))
-            // .then(info => api.eth.sendSignedTransaction(info.rawTransaction))
+        return window.web3js.eth.sendTransaction({from: address, to: contractAddress, data, value: ticketPrice, gas: "6000000"})
     },
-    login: ({ address, password }) => api.eth.personal.unlockAccount(address, password),
-    createRandomAccount: _ => api.eth.accounts.create()
+    login: () => 
+        window.web3js.eth.getAccounts().then(accounts => ({ address: accounts[0] })),
+    createRandomAccount: _ => window.web3js.eth.accounts.create()
 })
